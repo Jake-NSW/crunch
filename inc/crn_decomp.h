@@ -3156,7 +3156,7 @@ class crn_unpacker {
       return false;
 
     static_huffman_data_model dm[2];
-    for (uint32 i = 0; i < (has_etc_color_blocks ? 1 : 2); i++)
+    for (uint32 i = 0; i < (has_etc_color_blocks ? 1U : 2U); i++)
       if (!m_codec.decode_receive_static_data_model(dm[i]))
         return false;
 
