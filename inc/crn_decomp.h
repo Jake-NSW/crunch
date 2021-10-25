@@ -1934,7 +1934,7 @@ static void* crnd_default_realloc(void* p, size_t size, size_t* pActual_size, bo
 #ifdef WIN32
       *pActual_size = p_new ? ::_msize(p_new) : 0;
 #elif defined(__APPLE__)
-      *pActual_size = p_new ? malloc_size(p_new) : 0;
+      *pActual_size = p_new ? ::malloc_size(p_new) : 0;
 #else
       *pActual_size = p_new ? malloc_usable_size(p_new) : 0;
 #endif
