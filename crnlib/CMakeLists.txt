@@ -184,7 +184,7 @@ if(WIN32)
     ${CMAKE_CURRENT_SOURCE_DIR}/crn_threading_win32.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/crn_threading_win32.h
   )
-else(WIN32)
+else()
   set(CRNLIB_THREAD_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/crn_threading_pthreads.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/crn_threading_pthreads.h
