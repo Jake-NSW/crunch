@@ -1,8 +1,8 @@
 find_package (Threads)
 
 include_directories(
-  ${CMAKE_SOURCE_DIR}/inc
-  ${CMAKE_SOURCE_DIR}/crnlib
+  ${CMAKE_CURRENT_SOURCE_DIR}/../inc
+  ${CMAKE_CURRENT_SOURCE_DIR}/../crnlib
 )
 
 # Defines the source code for the library
