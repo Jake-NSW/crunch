@@ -140,6 +140,15 @@ bool command_line_params::parse(const dynamic_string_array& params, uint n, cons
 
       key_str.right(1);
 
+#if CRNLIB_CMD_LINE_ALLOW_SLASH_PARAMS
+      if ((src_param == "/?") || (src_param == "--help"))
+#else
+      if (src_param == "--help")
+#endif
+      {
+        key_str.set("h");
+      }
+
       int modifier = 0;
       char c = key_str[key_str.get_len() - 1];
       if (c == '+')

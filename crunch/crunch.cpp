@@ -73,6 +73,8 @@ class crunch {
     console::printf("See the docs for stb_image.c: http://www.nothings.org/stb_image.c");
     console::printf("Progressive JPEG files are supported, see: http://code.google.com/p/jpeg-compressor/");
 
+    console::printf("\n-h - Print this help.");
+
     console::message("\nPath/file related parameters:");
     console::printf("-out filename - Output filename");
     console::printf("-outdir dir - Output directory");
@@ -182,6 +184,8 @@ class crunch {
 
     command_line_params::param_desc std_params[] =
         {
+            {"h", 0, false},
+
             {"file", 1, true},
 
             {"out", 1, false},
@@ -293,6 +297,12 @@ class crunch {
          return false;
       }
 #endif
+
+    if (m_params.get_value_as_bool("h")) {
+      print_usage();
+
+      return true;
+    }
 
     if (m_params.get_value_as_bool("debug")) {
       console::debug("Command line parameters:");
