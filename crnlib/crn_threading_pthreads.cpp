@@ -11,16 +11,14 @@
 #include "crn_winhdr.h"
 #endif
 
-#if defined(__GNUC__) && !defined(__APPLE__)
+#if defined(__APPLE__)
+#include <sys/sysctl.h>
+#elif defined(__GNUC__)
 #include <sys/sysinfo.h>
 #endif
 
 #ifdef WIN32
 #include <process.h>
-#endif
-
-#if defined(__APPLE__)
-#include <sys/sysctl.h>
 #endif
 
 namespace crnlib {
