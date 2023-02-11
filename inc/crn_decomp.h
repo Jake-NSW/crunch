@@ -20,11 +20,11 @@
 #include <stdint.h>
 #ifdef WIN32
 #include <memory.h>
-#elif defined(__APPLE__)
-#include <malloc/malloc.h>
 #elif defined(__FreeBSD__)
 // <malloc.h> has been replaced by <stdlib.h>
 #include <malloc_np.h> // for malloc_usable_size
+#elif defined(__APPLE__)
+#include <malloc/malloc.h>
 #else
 #include <malloc.h>
 #endif

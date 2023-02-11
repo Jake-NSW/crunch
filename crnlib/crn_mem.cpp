@@ -3,10 +3,10 @@
 #include "crn_core.h"
 #include "crn_console.h"
 #include "../inc/crnlib.h"
-#if !defined(__APPLE__)
-#include <malloc.h>
-#else
+#if defined(__APPLE__)
 #include <malloc/malloc.h>
+#else
+#include <malloc.h>
 #endif
 #if CRNLIB_USE_WIN32_API
 #include "crn_winhdr.h"
