@@ -102,7 +102,7 @@ class crunch {
     console::printf("-clamp <width> <height> - Crop image if larger than width/height");
     console::printf("-clampscale <width> <height> - Scale image if larger than width/height");
     console::printf("-nostats - Disable all output file statistics (faster)");
-    console::printf("-imagestats - Print various image qualilty statistics");
+    console::printf("-imagestats - Print various image quality statistics");
     console::printf("-mipstats - Print statistics for each mipmap, not just the top mip");
     console::printf("-lzmastats - Print size of output file compressed with LZMA codec");
     console::printf("-split - Write faces/mip levels to multiple separate output PNG files");
