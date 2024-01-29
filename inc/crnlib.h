@@ -169,7 +169,7 @@ enum crn_dxt_quality {
 
 // Which DXTn compressor to use when compressing to plain (non-clustered) .DDS.
 enum crn_dxt_compressor_type {
-  cCRNDXTCompressorCRN,   // Use crnlib's ETC1 or DXTc block compressor (default, highest quality, comparable or better than ati_compress or squish, and crnlib's ETC1 is a lot fasterw with similiar quality to Erricson's)
+  cCRNDXTCompressorCRN,   // Use crnlib's ETC1 or DXTc block compressor (default, highest quality, comparable or better than ati_compress or squish, and crnlib's ETC1 is a lot faster with similiar quality to Erricson's)
   cCRNDXTCompressorCRNF,  // Use crnlib's "fast" DXTc block compressor
   cCRNDXTCompressorRYG,   // Use RYG's DXTc block compressor (low quality, but very fast)
 
@@ -512,7 +512,10 @@ typedef size_t (*crn_msize_func)(void* p, void* pUser_data);
 void crn_set_memory_callbacks(crn_realloc_func pRealloc, crn_msize_func pMSize, void* pUser_data);
 
 // Frees memory blocks allocated by crn_compress(), crn_decompress_crn_to_dds(), or crn_decompress_dds_to_images().
-void crn_free_block(void* pBlock);
+extern "C" __declspec(dllexport) void crn_free_block(void* pBlock);
+
+// Compresses a simple RGBA32 texture into a the designated type
+extern "C" __declspec(dllexport) void* crn_compress_texture2d(void *memory, crn_uint32 &compressed_size, bool alpha, bool mips, crn_uint32 width, crn_uint32 height, crn_uint32 quality);
 
 // Compresses a 32-bit/pixel texture to either: a regular DX9 DDS file, a "clustered" (or reduced entropy) DX9 DDS file, or a CRN file in memory.
 // Input parameters:
@@ -532,18 +535,18 @@ void crn_free_block(void* pBlock);
 //  Mipmap levels are simple 32-bit 2D images with a pitch of width*sizeof(uint32), arranged in the usual raster order (top scanline first).
 //  The image pixels may be grayscale (YYYX bytes in memory), grayscale/alpha (YYYA in memory), 24-bit (RGBX in memory), or 32-bit (RGBA) colors (where "X"=don't care).
 //  RGB color data is generally assumed to be in the sRGB colorspace. If not, be sure to clear the "cCRNCompFlagPerceptual" in the crn_comp_params struct!
-void* crn_compress(const crn_comp_params& comp_params, crn_uint32& compressed_size, crn_uint32* pActual_quality_level = NULL, float* pActual_bitrate = NULL);
+extern "C" __declspec(dllexport) void* crn_compress(const crn_comp_params & comp_params, crn_uint32 & compressed_size, crn_uint32 * pActual_quality_level = NULL, float* pActual_bitrate = NULL);
 
 // Like the above function, except this function can also do things like generate mipmaps, and resize or crop the input texture before compression.
 // The actual operations performed are controlled by the crn_mipmap_params struct members.
 // Be sure to set the "m_gamma_filtering" member of crn_mipmap_params to false if the input texture is not sRGB.
-void* crn_compress(const crn_comp_params& comp_params, const crn_mipmap_params& mip_params, crn_uint32& compressed_size, crn_uint32* pActual_quality_level = NULL, float* pActual_bitrate = NULL);
+/* extern "C" __declspec(dllexport) */ void* crn_compress(const crn_comp_params & comp_params, const crn_mipmap_params & mip_params, crn_uint32 & compressed_size, crn_uint32 * pActual_quality_level = NULL, float* pActual_bitrate = NULL);
 
 // Transcodes an entire CRN file to DDS using the crn_decomp.h header file library to do most of the heavy lifting.
 // The output DDS file's format is guaranteed to be one of the DXTn formats in the crn_format enum.
 // This is a fast operation, because the CRN format is explicitly designed to be efficiently transcodable to DXTn.
 // For more control over decompression, see the lower-level helper functions in crn_decomp.h, which do not depend at all on crnlib.
-void* crn_decompress_crn_to_dds(const void* pCRN_file_data, crn_uint32& file_size);
+extern "C" __declspec(dllexport) void* crn_decompress_crn_to_dds(const void* pCRN_file_data, crn_uint32 & file_size);
 
 // Decompresses an entire DDS file in any supported format to uncompressed 32-bit/pixel image(s).
 // See the crnlib::pixel_format enum in inc/dds_defs.h for a list of the supported DDS formats.
