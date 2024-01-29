@@ -34,7 +34,7 @@ option(OPTIMIZE_RELEASE "Optimize release build" ON)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-unused-value -Wno-unused")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
 if(OPTIMIZE_RELEASE)
   # CMake already sets -O3 flag on release build
