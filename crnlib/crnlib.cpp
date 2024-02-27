@@ -166,11 +166,11 @@ const char* crn_get_dxt_quality_string(crn_dxt_quality q) {
   return "?";
 }
 
-extern "C" __declspec(dllexport) void crn_free_block(void* pBlock) {
+CRUNCH_API void crn_free_block(void* pBlock) {
   crnlib_free(pBlock);
 }
 
-extern "C" __declspec(dllexport) void* crn_compress_texture2d(void* memory, crn_uint32 & compressed_size, bool alpha, bool generateMips, crn_uint32 width, crn_uint32 height, crn_uint32 quality) {
+CRUNCH_API void* crn_compress_texture2d(void* memory, crn_uint32 & compressed_size, bool alpha, bool generateMips, crn_uint32 width, crn_uint32 height, crn_uint32 quality) {
     crn_comp_params params = { };
     params.m_userdata1 = 1;
     params.m_pImages[0][0] = (crn_uint32*)memory;
@@ -193,7 +193,7 @@ extern "C" __declspec(dllexport) void* crn_compress_texture2d(void* memory, crn_
     return crn_compress(params, mips, compressed_size, NULL, NULL);
 }
 
-extern "C" __declspec(dllexport) void* crn_compress(const crn_comp_params & comp_params, crn_uint32 & compressed_size, crn_uint32 * pActual_quality_level, float* pActual_bitrate) {
+CRUNCH_API void* crn_compress(const crn_comp_params & comp_params, crn_uint32 & compressed_size, crn_uint32 * pActual_quality_level, float* pActual_bitrate) {
   compressed_size = 0;
   if (pActual_quality_level)
     *pActual_quality_level = 0;
@@ -211,7 +211,7 @@ extern "C" __declspec(dllexport) void* crn_compress(const crn_comp_params & comp
   return crn_file_data.assume_ownership();
 }
 
-/* extern "C" __declspec(dllexport) */ void* crn_compress(const crn_comp_params & comp_params, const crn_mipmap_params & mip_params, crn_uint32 & compressed_size, crn_uint32 * pActual_quality_level, float* pActual_bitrate) {
+void* crn_compress(const crn_comp_params & comp_params, const crn_mipmap_params & mip_params, crn_uint32 & compressed_size, crn_uint32 * pActual_quality_level, float* pActual_bitrate) {
   compressed_size = 0;
   if (pActual_quality_level)
     *pActual_quality_level = 0;
@@ -229,7 +229,7 @@ extern "C" __declspec(dllexport) void* crn_compress(const crn_comp_params & comp
   return crn_file_data.assume_ownership();
 }
 
-extern "C" __declspec(dllexport) void* crn_decompress_crn_to_dds(const void* pCRN_file_data, crn_uint32 & file_size) {
+CRUNCH_API void* crn_decompress_crn_to_dds(const void* pCRN_file_data, crn_uint32 & file_size) {
   mipmapped_texture tex;
   if (!tex.read_crn_from_memory(pCRN_file_data, file_size, "from_memory.crn")) {
     file_size = 0;
