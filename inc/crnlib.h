@@ -511,11 +511,18 @@ typedef void* (*crn_realloc_func)(void* p, size_t size, size_t* pActual_size, bo
 typedef size_t (*crn_msize_func)(void* p, void* pUser_data);
 void crn_set_memory_callbacks(crn_realloc_func pRealloc, crn_msize_func pMSize, void* pUser_data);
 
+
+#if _WIN32
+#define CRUNCH_API extern "C" __declspec(dllexport)
+#elif __linux__ 
+#define CRUNCH_API extern "C" __attribute__((visibility("default")))
+#endif
+
 // Frees memory blocks allocated by crn_compress(), crn_decompress_crn_to_dds(), or crn_decompress_dds_to_images().
-extern "C" __declspec(dllexport) void crn_free_block(void* pBlock);
+CRUNCH_API void crn_free_block(void* pBlock);
 
 // Compresses a simple RGBA32 texture into a the designated type
-extern "C" __declspec(dllexport) void* crn_compress_texture2d(void *memory, crn_uint32 &compressed_size, bool alpha, bool mips, crn_uint32 width, crn_uint32 height, crn_uint32 quality);
+CRUNCH_API void* crn_compress_texture2d(void *memory, crn_uint32 &compressed_size, bool alpha, bool mips, crn_uint32 width, crn_uint32 height, crn_uint32 quality);
 
 // Compresses a 32-bit/pixel texture to either: a regular DX9 DDS file, a "clustered" (or reduced entropy) DX9 DDS file, or a CRN file in memory.
 // Input parameters:
@@ -535,7 +542,7 @@ extern "C" __declspec(dllexport) void* crn_compress_texture2d(void *memory, crn_
 //  Mipmap levels are simple 32-bit 2D images with a pitch of width*sizeof(uint32), arranged in the usual raster order (top scanline first).
 //  The image pixels may be grayscale (YYYX bytes in memory), grayscale/alpha (YYYA in memory), 24-bit (RGBX in memory), or 32-bit (RGBA) colors (where "X"=don't care).
 //  RGB color data is generally assumed to be in the sRGB colorspace. If not, be sure to clear the "cCRNCompFlagPerceptual" in the crn_comp_params struct!
-extern "C" __declspec(dllexport) void* crn_compress(const crn_comp_params & comp_params, crn_uint32 & compressed_size, crn_uint32 * pActual_quality_level = NULL, float* pActual_bitrate = NULL);
+CRUNCH_API void* crn_compress(const crn_comp_params & comp_params, crn_uint32 & compressed_size, crn_uint32 * pActual_quality_level = NULL, float* pActual_bitrate = NULL);
 
 // Like the above function, except this function can also do things like generate mipmaps, and resize or crop the input texture before compression.
 // The actual operations performed are controlled by the crn_mipmap_params struct members.
@@ -546,7 +553,7 @@ extern "C" __declspec(dllexport) void* crn_compress(const crn_comp_params & comp
 // The output DDS file's format is guaranteed to be one of the DXTn formats in the crn_format enum.
 // This is a fast operation, because the CRN format is explicitly designed to be efficiently transcodable to DXTn.
 // For more control over decompression, see the lower-level helper functions in crn_decomp.h, which do not depend at all on crnlib.
-extern "C" __declspec(dllexport) void* crn_decompress_crn_to_dds(const void* pCRN_file_data, crn_uint32 & file_size);
+CRUNCH_API void* crn_decompress_crn_to_dds(const void* pCRN_file_data, crn_uint32 & file_size);
 
 // Decompresses an entire DDS file in any supported format to uncompressed 32-bit/pixel image(s).
 // See the crnlib::pixel_format enum in inc/dds_defs.h for a list of the supported DDS formats.
