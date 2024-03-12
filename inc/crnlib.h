@@ -522,7 +522,7 @@ void crn_set_memory_callbacks(crn_realloc_func pRealloc, crn_msize_func pMSize, 
 CRUNCH_API void crn_free_block(void* pBlock);
 
 // Compresses a simple RGBA32 texture into a the designated type
-CRUNCH_API void* crn_compress_texture2d(void *memory, crn_uint32 &compressed_size, bool alpha, bool mips, crn_uint32 width, crn_uint32 height, crn_uint32 quality);
+CRUNCH_API void* crn_compress_texture2d(void *memory, crn_uint32 &compressed_size, bool crunched, bool alpha, bool mips, crn_uint32 width, crn_uint32 height, crn_uint32 quality);
 
 // Compresses a 32-bit/pixel texture to either: a regular DX9 DDS file, a "clustered" (or reduced entropy) DX9 DDS file, or a CRN file in memory.
 // Input parameters:
