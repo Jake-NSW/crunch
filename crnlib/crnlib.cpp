@@ -182,7 +182,7 @@ CRUNCH_API void* crn_compress_texture2d(void* memory, crn_uint32 & compressed_si
     params.m_file_type = crunched ? cCRNFileTypeCRN : cCRNFileTypeDDS;
     params.m_faces = 1;
     params.m_dxt_quality = cCRNDXTQualityUber;
-    params.m_quality_level = quality;
+    params.m_quality_level = !crunched ? cCRNMaxQualityLevel : quality;
 
     if (!generateMips) {
         return crn_compress(params, compressed_size, NULL, NULL);
