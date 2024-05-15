@@ -172,7 +172,7 @@ CRUNCH_API void crn_free_block(void* pBlock) {
 
 CRUNCH_API void* crn_compress_texture2d(void* memory, crn_uint32 & compressed_size, bool crunched, bool alpha, bool generateMips, crn_uint32 width, crn_uint32 height, crn_uint32 quality) {
     crn_comp_params params = { };
-    params.m_userdata1 = 1;
+    params.m_userdata1 = 0;
     params.m_pImages[0][0] = (crn_uint32*)memory;
     params.m_levels = 1;
     params.m_width = width;
@@ -183,6 +183,7 @@ CRUNCH_API void* crn_compress_texture2d(void* memory, crn_uint32 & compressed_si
     params.m_faces = 1;
     params.m_dxt_quality = cCRNDXTQualityUber;
     params.m_quality_level = !crunched ? cCRNMaxQualityLevel : quality;
+    params.m_dxt_compressor_type = cCRNDXTCompressorCRN;
 
     if (!generateMips) {
         return crn_compress(params, compressed_size, NULL, NULL);
