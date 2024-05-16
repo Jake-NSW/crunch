@@ -216,6 +216,17 @@ CRUNCH_API void* crn_compress(const crn_comp_params & comp_params, const crn_mip
     *pActual_bitrate = 0.0f;
     
   printf("crn_compress\n");
+  printf("comp_params.m_width: %d\n", comp_params.m_width);
+  printf("comp_params.m_height: %d\n", comp_params.m_height);
+  printf("comp_params.m_levels: %d\n", comp_params.m_levels);
+  printf("comp_params.m_faces: %d\n", comp_params.m_faces);
+  printf("comp_params.m_format: %d\n", comp_params.m_format);
+  printf("comp_params.m_quality_level: %d\n", comp_params.m_quality_level);
+  printf("comp_params.m_dxt_quality: %d\n", comp_params.m_dxt_quality);
+  printf("comp_params.m_dxt_compressor_type: %d\n", comp_params.m_dxt_compressor_type);
+  printf("comp_params.m_file_type: %d\n", comp_params.m_file_type);
+  printf("comp_params.m_flags: %d\n", comp_params.m_flags);
+  printf("comp_params.m_pImages[0][0]: %p\n", comp_params.m_pImages[0][0]);
 
   if ((!comp_params.check()) || (!mip_params.check()))
     return NULL;
