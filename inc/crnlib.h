@@ -542,12 +542,12 @@ CRUNCH_API void* crn_compress_texture2d(void *memory, crn_uint32 &compressed_siz
 //  Mipmap levels are simple 32-bit 2D images with a pitch of width*sizeof(uint32), arranged in the usual raster order (top scanline first).
 //  The image pixels may be grayscale (YYYX bytes in memory), grayscale/alpha (YYYA in memory), 24-bit (RGBX in memory), or 32-bit (RGBA) colors (where "X"=don't care).
 //  RGB color data is generally assumed to be in the sRGB colorspace. If not, be sure to clear the "cCRNCompFlagPerceptual" in the crn_comp_params struct!
-CRUNCH_API void* crn_compress(const crn_comp_params & comp_params, crn_uint32 & compressed_size, crn_uint32 * pActual_quality_level = NULL, float* pActual_bitrate = NULL);
+void* crn_compress(const crn_comp_params & comp_params, crn_uint32 & compressed_size, crn_uint32 * pActual_quality_level = NULL, float* pActual_bitrate = NULL);
 
 // Like the above function, except this function can also do things like generate mipmaps, and resize or crop the input texture before compression.
 // The actual operations performed are controlled by the crn_mipmap_params struct members.
 // Be sure to set the "m_gamma_filtering" member of crn_mipmap_params to false if the input texture is not sRGB.
-/* extern "C" __declspec(dllexport) */ void* crn_compress(const crn_comp_params & comp_params, const crn_mipmap_params & mip_params, crn_uint32 & compressed_size, crn_uint32 * pActual_quality_level = NULL, float* pActual_bitrate = NULL);
+CRUNCH_API void* crn_compress(const crn_comp_params & comp_params, const crn_mipmap_params & mip_params, crn_uint32 & compressed_size, crn_uint32 * pActual_quality_level = NULL, float* pActual_bitrate = NULL);
 
 // Transcodes an entire CRN file to DDS using the crn_decomp.h header file library to do most of the heavy lifting.
 // The output DDS file's format is guaranteed to be one of the DXTn formats in the crn_format enum.
