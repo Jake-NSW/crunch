@@ -214,13 +214,19 @@ CRUNCH_API void* crn_compress(const crn_comp_params & comp_params, const crn_mip
     *pActual_quality_level = 0;
   if (pActual_bitrate)
     *pActual_bitrate = 0.0f;
+    
+  printf("crn_compress\n");
 
   if ((!comp_params.check()) || (!mip_params.check()))
     return NULL;
 
+  printf("passed checks on crn_compress\n");
+
   crnlib::vector<uint8> crn_file_data;
   if (!create_compressed_texture(comp_params, mip_params, crn_file_data, pActual_quality_level, pActual_bitrate))
     return NULL;
+
+  printf("created compressed texture\n");
 
   compressed_size = crn_file_data.size();
   return crn_file_data.assume_ownership();
