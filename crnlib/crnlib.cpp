@@ -190,7 +190,7 @@ CRUNCH_API void* crn_compress_texture2d(void* memory, crn_uint32 & compressed_si
     return crn_compress(params, mips, compressed_size, NULL, NULL);
 }
 
-CRUNCH_API void* crn_compress(const crn_comp_params & comp_params, crn_uint32 & compressed_size, crn_uint32 * pActual_quality_level, float* pActual_bitrate) {
+void* crn_compress(const crn_comp_params & comp_params, crn_uint32 & compressed_size, crn_uint32 * pActual_quality_level, float* pActual_bitrate) {
   compressed_size = 0;
   if (pActual_quality_level)
     *pActual_quality_level = 0;
@@ -208,7 +208,7 @@ CRUNCH_API void* crn_compress(const crn_comp_params & comp_params, crn_uint32 & 
   return crn_file_data.assume_ownership();
 }
 
-void* crn_compress(const crn_comp_params & comp_params, const crn_mipmap_params & mip_params, crn_uint32 & compressed_size, crn_uint32 * pActual_quality_level, float* pActual_bitrate) {
+CRUNCH_API void* crn_compress(const crn_comp_params & comp_params, const crn_mipmap_params & mip_params, crn_uint32 & compressed_size, crn_uint32 * pActual_quality_level, float* pActual_bitrate) {
   compressed_size = 0;
   if (pActual_quality_level)
     *pActual_quality_level = 0;
