@@ -181,15 +181,10 @@ CRUNCH_API void* crn_compress_texture2d(void* memory, crn_uint32 & compressed_si
     params.m_num_helper_threads = 8;
     params.m_file_type = crunched ? cCRNFileTypeCRN : cCRNFileTypeDDS;
     params.m_faces = 1;
-    params.m_dxt_quality = cCRNDXTQualityUber;
-    params.m_quality_level = !crunched ? cCRNMaxQualityLevel : quality;
     params.m_dxt_compressor_type = cCRNDXTCompressorCRN;
 
-    if (!generateMips) {
-        return crn_compress(params, compressed_size, NULL, NULL);
-    }
-
     crn_mipmap_params mips = { };
+    mips.m_mode = generateMips ? cCRNMipModeGenerateMips : cCRNMipModeNoMips;
     mips.m_mode = cCRNMipModeGenerateMips;
 
     return crn_compress(params, mips, compressed_size, NULL, NULL);
