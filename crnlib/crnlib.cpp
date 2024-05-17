@@ -191,18 +191,37 @@ CRUNCH_API void* crn_compress_texture2d(void* memory, crn_uint32 & compressed_si
 }
 
 CRUNCH_API void* crn_compress(const crn_comp_params & comp_params, crn_uint32 & compressed_size, crn_uint32 * pActual_quality_level, float* pActual_bitrate) {
+  printf("HOLY FUCK PELASE JUST FUCKING WORK");
   compressed_size = 0;
   if (pActual_quality_level)
     *pActual_quality_level = 0;
   if (pActual_bitrate)
     *pActual_bitrate = 0.0f;
+  printf("crn_compress\n");
+  printf("comp_params.m_width: %d\n", comp_params.m_width);
+  printf("comp_params.m_height: %d\n", comp_params.m_height);
+  printf("comp_params.m_levels: %d\n", comp_params.m_levels);
+  printf("comp_params.m_faces: %d\n", comp_params.m_faces);
+  printf("comp_params.m_format: %d\n", comp_params.m_format);
+  printf("comp_params.m_quality_level: %d\n", comp_params.m_quality_level);
+  printf("comp_params.m_dxt_quality: %d\n", comp_params.m_dxt_quality);
+  printf("comp_params.m_dxt_compressor_type: %d\n", comp_params.m_dxt_compressor_type);
+  printf("comp_params.m_file_type: %d\n", comp_params.m_file_type);
+  printf("comp_params.m_flags: %d\n", comp_params.m_flags);
+  printf("comp_params.m_pImages[0][0]: %p\n", comp_params.m_pImages[0][0]);
 
   if (!comp_params.check())
     return NULL;
 
+  printf("PASSED PARAMETERS CHECK");
+
   crnlib::vector<uint8> crn_file_data;
-  if (!create_compressed_texture(comp_params, crn_file_data, pActual_quality_level, pActual_bitrate))
+  if (!create_compressed_texture(comp_params, crn_file_data, pActual_quality_level, pActual_bitrate)){
+  printf("FUCKING FAIELD FOR SOEM DUMBASS REASON");
     return NULL;
+  }
+
+  printf("CREATED COMPRESSED FILE");
 
   compressed_size = crn_file_data.size();
   return crn_file_data.assume_ownership();
