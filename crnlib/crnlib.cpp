@@ -172,20 +172,15 @@ CRUNCH_API void crn_free_block(void* pBlock) {
 
 CRUNCH_API void* crn_compress_texture2d(void* memory, crn_uint32 & compressed_size, bool crunched, bool alpha, bool generateMips, crn_uint32 width, crn_uint32 height, crn_uint32 quality) {
     crn_comp_params params = { };
-    params.m_userdata1 = 0;
     params.m_pImages[0][0] = (crn_uint32*)memory;
-    params.m_levels = 1;
     params.m_width = width;
     params.m_height = height;
     params.m_format = alpha ? cCRNFmtDXT5 : cCRNFmtDXT1;
-    params.m_num_helper_threads = 8;
+    params.m_num_helper_threads = cCRNMaxHelperThreads;
     params.m_file_type = crunched ? cCRNFileTypeCRN : cCRNFileTypeDDS;
-    params.m_faces = 1;
-    params.m_dxt_compressor_type = cCRNDXTCompressorCRN;
 
     crn_mipmap_params mips = { };
     mips.m_mode = generateMips ? cCRNMipModeGenerateMips : cCRNMipModeNoMips;
-    mips.m_mode = cCRNMipModeGenerateMips;
 
     return crn_compress(params, mips, compressed_size, NULL, NULL);
 }
@@ -197,18 +192,12 @@ CRUNCH_API void* crn_compress(const crn_comp_params & comp_params, crn_uint32 & 
     *pActual_quality_level = 0;
   if (pActual_bitrate)
     *pActual_bitrate = 0.0f;
+
   printf("crn_compress\n");
-  printf("comp_params.m_width: %d\n", comp_params.m_width);
-  printf("comp_params.m_height: %d\n", comp_params.m_height);
-  printf("comp_params.m_levels: %d\n", comp_params.m_levels);
-  printf("comp_params.m_faces: %d\n", comp_params.m_faces);
-  printf("comp_params.m_format: %d\n", comp_params.m_format);
-  printf("comp_params.m_quality_level: %d\n", comp_params.m_quality_level);
-  printf("comp_params.m_dxt_quality: %d\n", comp_params.m_dxt_quality);
-  printf("comp_params.m_dxt_compressor_type: %d\n", comp_params.m_dxt_compressor_type);
-  printf("comp_params.m_file_type: %d\n", comp_params.m_file_type);
-  printf("comp_params.m_flags: %d\n", comp_params.m_flags);
-  printf("comp_params.m_pImages[0][0]: %p\n", comp_params.m_pImages[0][0]);
+  printf("crn_comp_params.m_size_of_object = %d", comp_params.m_size_of_obj);
+  
+  
+
 
   if (!comp_params.check())
     return NULL;
